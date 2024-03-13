@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Endpoint Security Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    #quiz-container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .question {
+      margin-bottom: 10px;
+    }
+
+    .options {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .option {
+      margin-bottom: 5px;
+    }
+
+    #submit-btn {
+      display: block;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="quiz-container">
+  <h1>Endpoint Security Test</h1>
+  <div id="quiz"></div>
+  <button id="submit-btn" onclick="submitQuiz()">Submit</button>
+</div>
+
+<script>
+  const questions = [
+    {
+      question: "What is the purpose of endpoint security?",
+      options: ["To make devices run faster", "To protect the network infrastructure", "To secure individual devices from security threats", "To improve battery life"],
+      correctAnswer: "To secure individual devices from security threats"
+    },
+    {
+      question: "What is a firewall in the context of endpoint security?",
+      options: ["A physical barrier around the device", "A software or hardware component that monitors and controls incoming and outgoing network traffic", "A protective case for the device", "A type of antivirus software"],
+      correctAnswer: "A software or hardware component that monitors and controls incoming and outgoing network traffic"
+    },
+    {
+      question: "Why is keeping software up to date important for endpoint security?",
+      options: ["To use the latest features", "To ensure compatibility with older devices", "To prevent security vulnerabilities and exploits", "To increase device performance"],
+      correctAnswer: "To prevent security vulnerabilities and exploits"
+    },
+    {
+      question: "What is the purpose of antivirus software on endpoint devices?",
+      options: ["To make devices immune to viruses", "To clean up the device storage", "To provide entertainment", "To detect and remove malicious software"],
+      correctAnswer: "To detect and remove malicious software"
+    },
+    {
+      question: "What is two-factor authentication (2FA) and why is it important for endpoint security?",
+      options: ["Using two different passwords", "Using two different devices", "Using two different usernames", "Using two different authentication methods to verify identity"],
+      correctAnswer: "Using two different authentication methods to verify identity"
+    },
+    {
+      question: "What is the purpose of encryption on endpoint devices?",
+      options: ["To make devices waterproof", "To make devices faster", "To protect data by converting it into a secure code", "To make devices invisible"],
+      correctAnswer: "To protect data by converting it into a secure code"
+    },
+    {
+      question: "What is the danger of using public Wi-Fi without precautions on endpoint devices?",
+      options: ["No danger, it's always safe", "Increased risk of unauthorized access and data interception", "Faster internet speed", "Improved battery life"]
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  function loadQuestion() {
+    const quiz = document.getElementById("quiz");
+    const currentQ = questions[currentQuestion];
+    const optionsList = currentQ.options.map((option, index) => {
+      return `<li class="option"><input type="radio" name="option" value="${option}"> ${option}</li>`;
+    }).join('');
+
+    quiz.innerHTML = `
+      <div class="question">${currentQ.question}</div>
+      <ul class="options">
+        ${optionsList}
+      </ul>
+    `;
+  }
+
+  function submitQuiz() {
+    const selectedOption = document.querySelector('input[name="option"]:checked');
+    if (!selectedOption) {
+      alert("Please select an option.");
+      return;
+    }
+
+    const answer = selectedOption.value;
+    const currentQ = questions[currentQuestion];
+
+    if (answer === currentQ.correctAnswer) {
+      score++;
+    }
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    const quizContainer = document.getElementById("quiz-container");
+    quizContainer.innerHTML = `
+      <h2>Test Completed</h2>
+      <p>Your score: ${score} out of ${questions.length}</p>
+      <p>Thank you for taking the Endpoint Security Test!</p>
+    `;
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>
